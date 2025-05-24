@@ -20,7 +20,9 @@ app.use('/psbackend',ps);
 
 app.use('/passwords',passwords)
 
-
+app.get('/',(req,res)=>{
+    res.send('Hello')
+})
 
 app.listen(process.env.PORT || 3000,()=>{
     console.log(`localhost:${process.env.PORT}/`);
