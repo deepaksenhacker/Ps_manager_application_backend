@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
 
     try {
         // Check if the user already exists
-        const exUser = await userModel.findOne({ email });
+        const exUser = await userModel.findOne({email:{$regex:email,$options:"i"}});
         if (exUser) {
             return res.json({ error: 'Existing user found' });
         }
@@ -64,7 +64,7 @@ router.post('/send/verification', async (req, res) => {
 
     try {
         // Check if the user already exists
-        const exUser = await userModel.findOne({ email });
+        const exUser = await userModel.findOne({email:{$regex:email,$options:"i"}});
         if (!exUser) {
             return res.json({ error: 'user is found' });
         }
@@ -139,7 +139,7 @@ router.post('/update/password', async (req, res) => {
 
     try {
         // Check if the user already exists
-        const exUser = await userModel.findOne({ email });
+        const exUser = await userModel.findOne({email:{$regex:email,$options:"i"}});
         if (exUser) {
             return res.json({ error: 'Existing user found' });
         }
@@ -192,7 +192,7 @@ router.post('/signup', async (req, res) => {
       
         }
         // Check if user already exists
-        const existingUser = await userModel.findOne({ email });
+        const existingUser = await userModel.findOne({email:{$regex:email,$options:"i"}});
         if (existingUser) {
             return res.status(400).json({ error: 'User already exists' });
         }
@@ -258,7 +258,7 @@ router.post('/login', async (req, res) => {
     
     try {
         // Check if the user exists
-        const user = await userModel.findOne({ email });
+        const user = await userModel.findOne({email:{$regex:email,$options:"i"}});
         
         if (!user) {
             return res.json({ error: 'Email is not registered!' });
