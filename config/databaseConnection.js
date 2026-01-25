@@ -7,7 +7,8 @@ const dbconn = async()=>{
        await mongoose.connect(process.env.MONGODB);
         console.log("Database is connected psmanagerbackend");
     } catch (error) {
-        console.log("Connection error");
+        console.log("Connection error",error);
+
     }
     
 }

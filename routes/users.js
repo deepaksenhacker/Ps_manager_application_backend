@@ -86,8 +86,8 @@ router.post('/send/verification', async (req, res) => {
         const sendResult = await Sender.sendMail(codeSend);
         verificationCodes =code;
         if (sendResult) {
-            return res.json({ success: 'Verification code sent successfully!' });
-             
+            console.log(sendResult);
+            return res.json({ success: 'Verification code sent successfully!' });   
         
         } else {
             return res.json({ error: 'Failed to send verification code!' });
@@ -279,7 +279,7 @@ router.post('/login', async (req, res) => {
         const token = jwt.sign(
             { userId: user._id, userEmail: user.email }, 
             process.env.SECRET,  // The secret key should be in your .env file
-            { expiresIn: '2d' }  // Token expires in 1 hour
+            { expiresIn: '60d' }  // Token expires
         );
 
         // Send the token in the response

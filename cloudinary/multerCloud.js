@@ -14,16 +14,6 @@ cloudinary.config({
 
 
 const multer = require('multer');
-const cloudStorage = new CloudinaryStorage({
-    cloudinary:cloudinary,
-    params:{
-        resource_type: 'raw',
-        folder:'myDoc',
-          
-    },
-  
-
-});
 
 
 const upload = multer.diskStorage({});
