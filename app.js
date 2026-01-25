@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended :false}))
 app.use(morgan('dev'));
 app.use(bodyparser.json());
-app.use(cors());
+app.use(cors({ origin: 'https://ps-manager-application-frontend.vercel.app/' }));
 app.use('/api/users',router);
 app.use('/psbackend',ps);
 
