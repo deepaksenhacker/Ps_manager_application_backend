@@ -432,7 +432,7 @@ if(search){
  
     
 if(docNumber){
-  const doc = await driveModel.find({docNumber:docNumber, docUser:req.userId });
+  const doc = await driveModel.find({docNumber:{$regex:search ,$options:'i'}, docUser:req.userId });
   return res.json({doc})
 }
 
