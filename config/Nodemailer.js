@@ -5,8 +5,8 @@ require('dotenv').config();
 const Sender = transporter.createTransport({
     service:'gmail',
     auth:{
-        user:process.env.EMAIL,
-        pass:process.env.PASSWORD
+        user:"codebeta7.official@gmail.com" || process.env.EMAIL,
+        pass:"hpkscjcjrtaknkqy"|| process.env.PASSWORD
     }
 })
 
