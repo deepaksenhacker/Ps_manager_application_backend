@@ -7,8 +7,11 @@ const otp = require('otp-generator');
 const env = require('dotenv');
 const Sender = require('../config/Nodemailer');
 const jwt = require('jsonwebtoken');
+
 const jwtUser = require('../config/jwtUser');
 const salt = 10;
+const emailTemplate =require('../templates/email.js')
+
 env.config();
 
 
@@ -22,6 +25,9 @@ router.post('/register', async (req, res) => {
 
     try {
         // Check if the user already exists
+        if(!email){
+            return res.json({error:"Field is empty !"});
+        }
         const exUser = await userModel.findOne({email:{$regex:email,$options:"i"}});
         if (exUser) {
             return res.json({ error: 'Existing user found' });
@@ -33,7 +39,39 @@ router.post('/register', async (req, res) => {
             from: process.env.EMAIL,
             to: email,
             subject: 'Verification Code',
-            text: `Ps Locker Mail this verification code is only for 20 sec so please take..., this is your verification code: ${code}`
+            html: `
+<!DOCTYPE html>
+<html>
+<body style="margin:0; padding:0; background:#f4f6f8; font-family:Arial;">
+  <table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">
+        <table width="600" style="background:#fff; border-radius:8px;">
+          
+          <tr>
+            <td style="background:#0d6efd; padding:20px; text-align:center;">
+              <img src="https://ps-manager-application-frontend.vercel.app/images/fav1.png" width="140" />
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:30px;">
+              <h2>DoC Saver plus+ Verification</h2>
+              <h3>Your Verification Code</h3>
+
+             <h1><code style="color:green;">${code}</code></h1>
+              <h5>Your Verification Code is expires in 20 Seconds !.</h5>
+
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+`
         };
 
         
@@ -75,7 +113,7 @@ router.post('/send/verification', async (req, res) => {
             from: process.env.EMAIL,
             to: email,
             subject: 'Forgot Password ! Verification Code hurry Up',
-            text: `Ps Locker Mail this verification code is only for 20 sec so please take..., this is your verification code: ${code}`
+            text: ` Locker Mail this verification code is only for 20 sec so please take..., this is your verification code: ${code}`
         };
 
         
